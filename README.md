@@ -2,7 +2,7 @@
 
 [**Paper**](https://arxiv.org/abs/2211.13757) | [**Project Page**](https://light.princeton.edu/publication/diffusion-sdf/) <br>
 
-(Update Jan 19th 2023) Repo created. Code will be released by end of January. Stay tuned!
+(Update Jan 19th 2023) Repo created. Code will be released early February. Stay tuned!
 
 This repository contains the official implementation of <br> 
 **DiffusionSDF: Conditional Generative Modeling of Signed Distance Functions** <br>
