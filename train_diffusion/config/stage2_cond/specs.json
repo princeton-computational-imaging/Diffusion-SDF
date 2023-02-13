@@ -1,0 +1,37 @@
+{
+  "desc" : "training diffusion model using saved modulations, conditional",
+  "data_path" : "../train_sdf/config/stage1_sdf/modulations",
+  "split_file" : "../train_sdf/data/splits/couch_all.json",
+  "pc_path" : "../train_sdf/data",
+  "total_pc_size" : 10000,
+  "sample_pc_size" : 128,
+  "perturb_pc":"partial",
+  "crop_percent":0.5,
+
+  "train_lr" : 1e-5,
+  "training_iters" : 500001,
+  "save_and_sample_every" : 100000,
+  "print_freq" : 1000,
+  "save_model" : true,
+
+  "diffusion_specs" : {
+    "timesteps" : 1000,
+    "sampling_timesteps" : 250,
+    "objective" : "pred_x0",
+    "loss_type" : "l2",
+    "noise_scale" : 1.0 
+  },
+
+  "model_specs" : {
+    "dim" : 768,
+    "dim_in_out" : 768,
+    "depth" : 4,
+    "ff_dropout" : 0.3,
+    "cond" : true,
+    "cross_attn" : true,
+    "cond_dropout": true,
+    "point_feature_dim" : 128
+  }
+
+}
+

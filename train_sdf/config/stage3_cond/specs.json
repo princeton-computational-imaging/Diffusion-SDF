@@ -1,0 +1,51 @@
+{
+  "Description" : "end-to-end training (conditional) on filtered couch dataset",
+  "DataSource" : "data",
+  "GridSource" : "grid_data",
+  "TrainSplit" : "data/splits/couch_all.json",
+  "TestSplit" : "data/splits/couch_all.json",
+  "modulation_path" : "config/stage1_sdf/modulations",
+
+  "modulation_ckpt_path" : "config/stage1_sdf/last.ckpt",
+  "diffusion_ckpt_path" : "../train_diffusion/config/stage2_cond/results/500000.pt",
+  
+  "training_task": "combined",
+
+  "num_epochs" : 100001,
+  "log_freq" : 5000,
+
+  "kld_weight" : 0.01,
+  "latent_std" : 0.25,
+  
+  "sdf_lr" : 1e-4,
+  "diff_lr" : 1e-5,
+
+  "SdfModelSpecs" : {
+    "hidden_dim" : 512,
+    "latent_dim" : 256,
+    "pn_hidden_dim" : 128,
+    "num_layers" : 9
+  },
+  "SampPerMesh" : 16000,
+  "PCsize" : 1024,
+
+  "diffusion_specs" : {
+    "timesteps" : 1000,
+    "objective" : "pred_x0",
+    "loss_type" : "l2",
+    "perturb_pc" : "partial",
+    "crop_percent": 0.5,
+    "sample_pc_size" : 128
+  },
+  "diffusion_model_specs": {
+    "dim" : 768,
+    "depth" : 4,
+    "ff_dropout" : 0.3,
+    "cond" : true,
+    "cross_attn" : true,
+    "cond_dropout":true,
+    "point_feature_dim" : 128
+  }
+}
+
+
