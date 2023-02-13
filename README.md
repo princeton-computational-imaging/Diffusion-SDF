@@ -67,7 +67,7 @@ As mentioned in our [paper](https://arxiv.org/abs/2211.13757), there are three s
 
 ```
 cd train_sdf
-python train.py -e config/sdf_couch/ -b 32 -w 8    # -b for batch size, -w for workers, -r to resume training
+python train.py -e config/stage1_sdf/ -b 32 -w 8    # -b for batch size, -w for workers, -r to resume training
 ```
 Training notes: For Acronym / ShapeNet datasets, the loss should go down to $6 \sim 8 \times 10^{-4}$ after a few days. Run testing to visualize whether the quality of reconstructed shapes is sufficient. The quality of reconstructions will carry over to the quality of generations. Note that the dimension of the VAE latent vectors will be 3 times `"latent_dim"` in `"SdfModelSpecs"` listed in the config file.
 
@@ -77,15 +77,15 @@ Training notes: For Acronym / ShapeNet datasets, the loss should go down to $6 \
 # extract the modulations / latent vectors, which will be saved in a "modulations" folder in the config directory
 # the folder needs to correspond to "data_path" in the diffusion config files
 cd train_sdf
-python test.py -e config/sdf_couch/ -b 32 -w 8 -r last
+python test.py -e config/stage1_sdf/ -b 32 -w 8 -r last
 
 # unconditional
 cd train_diffusion
-python train.py -e config/diff_couch/ -b 32 -w 8 
+python train.py -e config/stage2_uncond/ -b 32 -w 8 
 
 # conditional
 cd train_diffusion
-python train.py -e config/cond_diff_couch/ -b 32 -w 8 
+python train.py -e config/stage2_cond/ -b 32 -w 8 
 ```
 Training notes: When extracting modulations, we recommend filtering based on the chamfer distance. See `test_modulations()` in `test.py` for details. `diff100` should approach 0 while `diff1000` can remain relatively high. Some notes on the conditional config file:  `"perturb_pc":"partial"`, `"crop_percent":0.5`, and `"sample_pc_size":128` refers to cropping 50% of a point cloud with 128 points to use as condition. `dim` in `diffusion_model_specs` needs to be the dimension of the latent vector, which is 3 times `"latent_dim"` in `"SdfModelSpecs"`. <br>
 
@@ -97,16 +97,16 @@ Training notes: When extracting modulations, we recommend filtering based on the
 ```
 # unconditional
 cd train_sdf
-python train.py -e config/end_couch/ -b 32 -w 8 -r finetune     # training from the saved models of first two stages
-python train.py -e config/end_couch/ -b 32 -w 8 -r last     # resuming training if third stage has been trained 
+python train.py -e config/stage3_uncond/ -b 32 -w 8 -r finetune     # training from the saved models of first two stages
+python train.py -e config/stage3_uncond/ -b 32 -w 8 -r last     # resuming training if third stage has been trained 
 
 
 # conditional
 cd train_sdf
-python train.py -e config/cond_end_couch/ -b 32 -w 8 -r finetune    # training from the saved models of first two stages
-python train.py -e config/cond_end_couch/ -b 32 -w 8 -r last     # resuming training if third stage has been trained 
+python train.py -e config/stage3_cond/ -b 32 -w 8 -r finetune    # training from the saved models of first two stages
+python train.py -e config/stage3_cond/ -b 32 -w 8 -r last     # resuming training if third stage has been trained 
 ```
-Training notes: The config file needs to contain the saved checkpoints for the previous two stages of training. View tensorboard logs to determine when to stop training. The sdf loss (not generated sdf loss) should approach $6 \sim 8 \times 10^{-4}$. Quality and detail of generations continue to improve after convergence but diversity and consistency remain the same. 
+Training notes: The config file needs to contain the saved checkpoints for the previous two stages of training. View tensorboard logs to determine when to stop training. The sdf loss (not generated sdf loss) should approach $6 \sim 8 \times 10^{-4}$.
 
 ## Testing
 1. Testing SDF reconstructions and saving modulations
@@ -116,7 +116,7 @@ After the first stage of training, visualize / test reconstructions and save mod
 # extract the modulations / latent vectors, which will be saved in a "modulations" folder in the config directory
 # the folder needs to correspond to "data_path" in the diffusion config files
 cd train_sdf
-python test.py -e config/sdf_couch/ -r last
+python test.py -e config/stage1_sdf/ -r last
 ```
 A `recon` folder in the config directory will contain the `.ply` reconstructions and a `cd.csv` file that logs Chamfer Distance (CD). A `modulation` folder will contain `latent.txt` files for each SDF. The `modulation` folder will be the data path to the second stage of training.
 
@@ -126,8 +126,8 @@ Meshes can be generated after the second or third stage of training.
 <!-- We will provide code for quantitative metrics soon. -->
 ```
 cd train_sdf
-python test.py -e config/end_couch/ -r finetune  # generation after second stage 
-python test.py -e config/end_couch/ -r last      # after third stage 
+python test.py -e config/stage3_uncond/ -r finetune  # generation after second stage 
+python test.py -e config/stage3_uncond/ -r last      # after third stage 
 
 ```
 A `recon` folder in the config directory will contain the `.ply` reconstructions. `max_batch` arguments in `test.py` are used for running marching cubes; change it to the max value your GPU memory can hold.
