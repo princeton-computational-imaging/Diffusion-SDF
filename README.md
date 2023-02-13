@@ -3,7 +3,7 @@
 [**Paper**](https://arxiv.org/abs/2211.13757) | [**Project Page**](https://light.princeton.edu/publication/diffusion-sdf/) <br>
 
 ~~(Update Jan 19th 2023) Repo created. Code will be released early February. Stay tuned!~~ <br>
-(Update Feb 5th 2023) Training and generation / visualization code are released. Instructions provided below. For any questions or suggestions for readability, feel free to create a github issue or contact me (gchou@princeton.edu). 
+(Update Feb 12th 2023) Training and generation / visualization code are released. Instructions provided below. For any questions or suggestions for readability, feel free to create a github issue or contact me (gchou@princeton.edu). 
 
 This repository contains the official implementation of <br> 
 **DiffusionSDF: Conditional Generative Modeling of Signed Distance Functions** <br>
@@ -51,7 +51,7 @@ We recommend creating an [anaconda](https://www.anaconda.com/) environment using
 
 ```
 conda env create -f environment.yml
-conda activate sdf
+conda activate diffusionsdf
 ```
 
 ## Dataset
