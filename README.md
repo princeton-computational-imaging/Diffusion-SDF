@@ -3,7 +3,8 @@
 [**Paper**](https://arxiv.org/abs/2211.13757) | [**Project Page**](https://light.princeton.edu/publication/diffusion-sdf/) <br>
 
 ~~(Update Jan 19th 2023) Repo created. Code will be released early February. Stay tuned!~~ <br>
-(Update Feb 12th 2023) Training and generation / visualization code are released. Instructions provided below. For any questions or suggestions for readability, feel free to create a github issue or contact me (gchou@princeton.edu). 
+(Update Feb 12th 2023) Training and generation / visualization code are released. Instructions provided below. <br>
+(Update Mar 4th 2023) When refactoring the code we seemed to introduce some bugs to the diffusion model when training with pytorch lightning, so the third training stage does not work as expected. We recommend simply generating after the second stage, and we will update the repo when we identify the issue. 
 
 This repository contains the official implementation of <br> 
 **DiffusionSDF: Conditional Generative Modeling of Signed Distance Functions** <br>
@@ -60,8 +61,7 @@ For training, we preprocess all meshes and store query coordinates and signed di
 When sampling query points, make sure to also **sample uniformly within the 3D grid space** (i.e. from (-1,-1,-1) to (1,1,1)) rather than only sampling near the surface to avoid artifacts. For each training batch, we take 70% of query points sampled near the object surface and 30% sampled uniformly in the grid. `grid_source` in our dataloader and config file refers to the latter. <br>
 
 ## Training
-As mentioned in our [paper](https://arxiv.org/abs/2211.13757), there are three stages of training. All corresponding config files can be found in the `config` folders. Logs are created in a `tensorboard_logs` folder in the root directory. We recommend tuning the `"kld_weight"` when training the joint SDF-VAE model as it enforces the continuity of the latent space. A higher value (e.g. 0.1, 0.01) will result in better interpolation and generalization but sometimes more artifacts. A lower value (e.g. 0.00001) will result in worse generalization but higher quality of generations. <br>
-** We tried incorporating the diffusion model (second stage training) into the pytorch lightning framework (see `train_sdf/models/combined_model.py`) but encountered some bugs, so currently we have separate training folders. If debugged will update code. We also welcome pull requests.
+As mentioned in our [paper](https://arxiv.org/abs/2211.13757), there are three stages of training. All corresponding config files can be found in the `config` folders. Logs are created in a `tensorboard_logs` folder in the root directory. We recommend tuning the `"kld_weight"` when training the joint SDF-VAE model as it enforces the continuity of the latent space. A higher value (e.g. 0.1) will result in better interpolation and generalization but sometimes more artifacts. A lower value (e.g. 0.00001) will result in worse interpolation but higher quality of generations. <br>
 
 1. Training SDF modulations
 
@@ -92,7 +92,7 @@ Training notes: When extracting modulations, we recommend filtering based on the
 <!-- For training curves in tensorboard, `diff100` should approach 0 while `diff1000` can remain relatively high. Apply highest smoothing in tensorboard when viewing. See `models/combined_model.py` for details. -->
 
 
-3. End-to-end training using the saved models from above 
+3. End-to-end training using the saved models from above (**Currently this training stage has bugs, will update after fixing.**)
 
 ```
 # unconditional
@@ -122,13 +122,11 @@ A `recon` folder in the config directory will contain the `.ply` reconstructions
 
 2. Generations 
 
-Meshes can be generated after the second or third stage of training. 
-<!-- We will provide code for quantitative metrics soon. -->
+Meshes can be generated after the second or third stage of training. **Currently third training stage has bugs, will update after fixing.**
 ```
 cd train_sdf
 python test.py -e config/stage3_uncond/ -r finetune  # generation after second stage 
 python test.py -e config/stage3_uncond/ -r last      # after third stage 
-
 ```
 A `recon` folder in the config directory will contain the `.ply` reconstructions. `max_batch` arguments in `test.py` are used for running marching cubes; change it to the max value your GPU memory can hold.
 

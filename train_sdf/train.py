@@ -22,7 +22,7 @@ from utils import mesh, evaluate
 from utils.reconstruct import *
 from diff_utils.helpers import * 
 #from metrics.evaluation_metrics import *#compute_all_metrics
-from metrics import evaluation_metrics
+#from metrics import evaluation_metrics
 
 from dataloader.pc_loader import PCloader
 from dataloader.sdf_loader import SdfLoader
