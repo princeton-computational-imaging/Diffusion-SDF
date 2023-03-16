@@ -1,13 +1,13 @@
-# DiffusionSDF: Conditional Generative Modeling of Signed Distance Functions
+# Diffusion-SDF: Conditional Generative Modeling of Signed Distance Functions
 
-[**Paper**](https://arxiv.org/abs/2211.13757) | [**Project Page**](https://light.princeton.edu/publication/diffusion-sdf/) <br>
+[**Paper**](https://arxiv.org/abs/2211.13757) | [**Supplement**](https://light.princeton.edu/wp-content/uploads/2023/03/diffusionsdf_supp.pdf) | [**Project Page**](https://light.princeton.edu/publication/diffusion-sdf/) <br>
 
 ~~(Update Jan 19th 2023) Repo created. Code will be released early February. Stay tuned!~~ <br>
 (Update Feb 12th 2023) Training and generation / visualization code are released. Instructions provided below. <br>
 (Update Mar 4th 2023) When refactoring the code we seemed to introduce some bugs to the diffusion model when training with pytorch lightning, so the third training stage does not work as expected. We recommend simply generating after the second stage, and we will update the repo when we identify the issue. 
 
 This repository contains the official implementation of <br> 
-**DiffusionSDF: Conditional Generative Modeling of Signed Distance Functions** <br>
+**Diffusion-SDF: Conditional Generative Modeling of Signed Distance Functions** <br>
 [Gene Chou](https://genechou.com), [Yuval Bahat](https://sites.google.com/view/yuval-bahat/home), [Felix Heide](https://www.cs.princeton.edu/~fheide/) <br>
 
 
