@@ -92,67 +92,12 @@ if __name__ == "__main__":
         help="continue from previous saved logs, integer value, 'last', or 'finetune'",
     )
 
-    # train SDF modulations, diffusion, or end-to-end
-    # "training_task" in specs file
-    # arg_parser.add_argument(
-    #     "--mode", "-m", required=True,
-    #     help="'modulation' or 'diffusion' or 'combined' ",
-    # )
-
-    # add argument for conditional training
-    arg_parser.add_argument("--cond", "-c", default=False, action='store_true', help='False for unconditional training, True for conditional training')
-
-
     arg_parser.add_argument("--batch_size", "-b", default=1, type=int)
     arg_parser.add_argument( "--workers", "-w", default=8, type=int)
 
-
-
-
-
-    arg_parser.add_argument("--test", "-t", action='store_true')
-    arg_parser.add_argument("--latent", "-l", action='store_true')
-    arg_parser.add_argument("--take_pc", "-p", default=False, nargs="+", help="path to the pc csv file")
-    #arg_parser.add_argument("--take_mod", "-m", default=False, nargs="+", help="path to the modulation txt file")
-    arg_parser.add_argument("--mod_folder", "-f", default=False, help="path to folder for reconstructing")
-    #arg_parser.add_argument("--sample", "-s", action='store_true', help="true/false, sample from VAE")
-    arg_parser.add_argument("--output_name", "-o", default=False, help="name of output ply file")
-  
     args = arg_parser.parse_args()
     specs = json.load(open(os.path.join(args.exp_dir, "specs.json")))
     print(specs["Description"])
 
 
     train()
-
-
-    # if args.mode == 'train':
-    #     #assert args.train_mode in ('modulation', 'diffusion', 'combined'), "'train_mode' should be one of 'modulation', 'diffusion', 'combined'"
-    #     train()
-    # elif args.mode == 'test':
-    #     test(args, specs)
-    # elif args.mode == 'evaluate':
-    #     evaluate(args, specs)
-    # elif args.mode == 'visual':
-    #     visualize(args, specs)
-    # else:
-    #     exit("The only modes available are 'train' 'test' 'evaluate' 'visual'...")
-
-
-
-
-
-
-    save_dir = args.exp_dir
-    recon_dir = os.path.join(save_dir, "recon")
-    os.makedirs(save_dir, exist_ok=True)
-    os.makedirs(recon_dir, exist_ok=True)
-    latent_dir = os.path.join(save_dir, "modulations")
-    os.makedirs(latent_dir, exist_ok=True)
-
-    if args.test:
-        test()
-        exit()
- 
-
-    main()
