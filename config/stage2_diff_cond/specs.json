@@ -1,0 +1,36 @@
+{
+  "Description" : "diffusion training (conditional) on couch dataset",
+  "pc_path" : "data",
+  "total_pc_size" : 10000,
+  "TrainSplit" : "data/splits/couch_all.json",
+  "TestSplit" : "data/splits/couch_all.json",
+  "data_path" : "config/stage1_sdf/modulations",
+
+  "training_task": "diffusion",
+
+  
+  "num_epochs" : 50001,
+  "log_freq" : 5000,
+
+  "diff_lr" : 1e-5,
+
+  "diffusion_specs" : {
+    "timesteps" : 1000,
+    "objective" : "pred_x0",
+    "loss_type" : "l2",
+    "perturb_pc" : "partial",
+    "crop_percent": 0.5,
+    "sample_pc_size" : 128
+  },
+  "diffusion_model_specs": {
+    "dim" : 768,
+    "depth" : 4,
+    "ff_dropout" : 0.3,
+    "cond" : true,
+    "cross_attn" : true,
+    "cond_dropout":true,
+    "point_feature_dim" : 128
+  }
+}
+
+
