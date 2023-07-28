@@ -3,17 +3,17 @@
 [**Paper**](https://arxiv.org/abs/2211.13757) | [**Supplement**](https://light.princeton.edu/wp-content/uploads/2023/03/diffusionsdf_supp.pdf) | [**Project Page**](https://light.princeton.edu/publication/diffusion-sdf/) <br>
 
 This repository contains the official implementation of <br> 
-**Diffusion-SDF: Conditional Generative Modeling of Signed Distance Functions** <br>
+**[ICCV 2023] Diffusion-SDF: Conditional Generative Modeling of Signed Distance Functions** <br>
 [Gene Chou](https://genechou.com), [Yuval Bahat](https://sites.google.com/view/yuval-bahat/home), [Felix Heide](https://www.cs.princeton.edu/~fheide/) <br>
 
 
 If you find our code or paper useful, please consider citing
 ```bibtex
-@article{chou2022diffusionsdf,
+@inproceedings{chou2022diffusionsdf,
 title={Diffusion-SDF: Conditional Generative Modeling of Signed Distance Functions},
 author={Gene Chou and Yuval Bahat and Felix Heide},
-journal={arXiv preprint arXiv:2211.13757},
-year={2022}
+journal={The IEEE International Conference on Computer Vision (ICCV)},
+year={2023}
 }
 ```
 
